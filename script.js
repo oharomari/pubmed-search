@@ -1,8 +1,10 @@
 async function buscarArtigos() {
     try {
+        const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
         const termoDeBusca = "(echocardiography[Title/Abstract])+AND+(preterm[Title/Abstract])";
         const retmax = 20;
-        const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=${termoDeBusca}&retmode=json&retmax=${retmax}&sort=relevance&field=pubdate`;
+        const url = `${proxyUrl}https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=(echocardiography[Title/Abstract])+AND+(preterm[Title/Abstract])&retmode=json&retmax=20&sort=relevance&field=pubdate`;
+
 
         const response = await axios.get(url);
         const dados = response.data;
