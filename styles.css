@@ -1,64 +1,51 @@
-/* Definir fonte e cor de fundo */
+/* Definição da fonte padrão */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
+  font-family: "Montserrat", sans-serif;
 }
 
-/* Centralizar o título da página */
-.title {
+/* Definição do estilo do título */
+h1 {
+  font-size: 3em;
+  font-weight: 900;
   text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
-/* Estilizar a tabela de resultados */
-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-top: 20px;
+/* Definição do estilo da lista de artigos */
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
-th, td {
-  padding: 8px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+/* Definição do estilo dos itens da lista de artigos */
+li {
+  margin-bottom: 20px;
 }
 
-th {
-  background-color: #4CAF50;
-  color: white;
+/* Definição do estilo do título do artigo */
+.article-title {
+  font-size: 1.2em;
+  font-weight: 700;
 }
 
-/* Estilizar o botão de busca */
-#btn-buscar {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin-top: 10px;
-  cursor: pointer;
-  border-radius: 4px;
+/* Definição do estilo dos autores do artigo */
+.article-authors {
+  font-size: 0.9em;
+  font-weight: 500;
 }
 
-#btn-buscar:hover {
-  background-color: #3e8e41;
+/* Definição do estilo da revista do artigo */
+.article-journal {
+  font-size: 0.9em;
+  font-weight: 500;
 }
 
-/* Estilizar a mensagem de erro */
-#erro-busca {
-  color: red;
-  font-weight: bold;
-  margin-top: 10px;
+/* Definição do estilo do doi do artigo */
+.article-doi {
+  font-size: 0.8em;
+  font-weight: 400;
+  font-style: italic;
 }
 
-/* Estilizar o link para o artigo */
-a {
-  color: #4CAF50;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
