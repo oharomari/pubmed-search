@@ -1,51 +1,41 @@
-/* Definição da fonte padrão */
 body {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
 }
 
-/* Definição do estilo do título */
-h1 {
-  font-size: 3em;
-  font-weight: 900;
+header {
   text-align: center;
-  margin-top: 50px;
-  margin-bottom: 50px;
+  background-color: #222;
+  color: #fff;
+  padding: 1rem;
 }
 
-/* Definição do estilo da lista de artigos */
-ul {
-  list-style-type: none;
+header h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+#lista-artigos {
+  list-style: none;
   margin: 0;
   padding: 0;
 }
 
-/* Definição do estilo dos itens da lista de artigos */
-li {
-  margin-bottom: 20px;
+#lista-artigos li {
+  margin-bottom: 1rem;
 }
 
-/* Definição do estilo do título do artigo */
-.article-title {
-  font-size: 1.2em;
-  font-weight: 700;
+#lista-artigos a {
+  color: #0077c0;
+  text-decoration: none;
 }
 
-/* Definição do estilo dos autores do artigo */
-.article-authors {
-  font-size: 0.9em;
-  font-weight: 500;
+#lista-artigos a:hover {
+  text-decoration: underline;
 }
-
-/* Definição do estilo da revista do artigo */
-.article-journal {
-  font-size: 0.9em;
-  font-weight: 500;
-}
-
-/* Definição do estilo do doi do artigo */
-.article-doi {
-  font-size: 0.8em;
-  font-weight: 400;
-  font-style: italic;
-}
-
