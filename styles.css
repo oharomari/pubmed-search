@@ -1,41 +1,43 @@
 body {
+  background-color: #f0e7f2;
   font-family: 'Montserrat', sans-serif;
-  margin: 0;
 }
 
 header {
+  background-color: #8a4f7d;
+  color: white;
   text-align: center;
-  background-color: #222;
-  color: #fff;
-  padding: 1rem;
+  padding: 20px;
 }
 
-header h1 {
-  font-size: 2rem;
+h1 {
+  font-size: 2.5rem;
   margin: 0;
+}
+
+.titulo-vermelho {
+  color: #e60000;
 }
 
 main {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 1rem;
+  margin: 20px;
 }
 
-#lista-artigos {
-  list-style: none;
-  margin: 0;
+ul {
+  list-style-type: none;
   padding: 0;
 }
 
-#lista-artigos li {
-  margin-bottom: 1rem;
+li {
+  margin-bottom: 10px;
 }
 
-#lista-artigos a {
-  color: #0077c0;
+a {
+  color: #8a4f7d;
   text-decoration: none;
+  font-weight: bold;
 }
 
-#lista-artigos a:hover {
+a:hover {
   text-decoration: underline;
 }
