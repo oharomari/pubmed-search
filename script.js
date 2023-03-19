@@ -1,55 +1,61 @@
+// URL do CORS Anywhere
+const proxyUrl = 'https://cors-anywhere-for-everyone.herokuapp.com/';
+
+// URL da API do PubMed
+const url = `${proxyUrl}https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=(echocardiography[Title/Abstract])+AND+(preterm[Title/Abstract])&retmode=json&retmax=20&sort=relevance&field=pubdate`;
+
+// Função para buscar artigos na API do PubMed
 async function buscarArtigos() {
-    try {
-        const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
-        const termoDeBusca = "(echocardiography[Title/Abstract])+AND+(preterm[Title/Abstract])";
-        const retmax = 200;
-        const url = `${proxyUrl}https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=(echocardiography[Title/Abstract])+AND+(preterm[Title/Abstract])&retmode=json&retmax=20&sort=relevance&field=pubdate`;
+  try {
+    // Fazer a solicitação de busca
+    const response = await fetch(url, {
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    });
+    const data = await response.json();
 
+    // Obter lista de IDs de artigos
+    const ids = data.esearchresult.idlist;
 
-        const response = await axios.get(url);
-        const dados = response.data;
-        console.log("Dados da busca:", dados);
-
-        const ids = dados.esearchresult.idlist;
-        const elementoResultados = document.getElementById("resultados");
-
-        if (ids.length === 0) {
-            console.log("Nenhum artigo encontrado.");
-            const mensagem = document.createElement("p");
-            mensagem.textContent = "Nenhum artigo encontrado.";
-            elementoResultados.appendChild(mensagem);
-        } else {
-            for (const id of ids) {
-                const urlSumario = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=${id}&retmode=json`;
-
-                const responseSumario = await axios.get(urlSumario);
-                const dadosSumario = responseSumario.data;
-                console.log("Dados do sumário:", dadosSumario);
-
-                const titulo = dadosSumario.result[id].title;
-                const pmid = dadosSumario.result[id].uid;
-                const doi = dadosSumario.result[id].elocationid;
-
-                const elementoTitulo = document.createElement("h2");
-                elementoTitulo.textContent = titulo;
-                elementoResultados.appendChild(elementoTitulo);
-
-                const elementoPmid = document.createElement("p");
-                elementoPmid.textContent = `PMID: ${pmid}`;
-                elementoResultados.appendChild(elementoPmid);
-
-                if (doi) {
-                    const elementoDoi = document.createElement("p");
-                    elementoDoi.textContent = `DOI: ${doi}`;
-                    elementoResultados.appendChild(elementoDoi);
-                }
-            }
+    // Para cada ID, obter informações do artigo
+    const artigos = await Promise.all(ids.map(async (id) => {
+      const res = await fetch(`${proxyUrl}https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=${id}&retmode=json`, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
         }
-    } catch (error) {
-        console.error("Erro ao buscar artigos:", error);
-    }
+      });
+      const json = await res.json();
+      return json.result[id];
+    }));
+
+    // Ordenar artigos por data de publicação
+    artigos.sort((a, b) => new Date(b.pubdate) - new Date(a.pubdate));
+
+    // Exibir os artigos na página
+    const listaArtigos = document.getElementById('lista-artigos');
+    listaArtigos.innerHTML = '';
+    artigos.forEach((artigo) => {
+      const li = document.createElement('li');
+      const doi = artigo.articleids.filter((id) => id.idtype === 'doi')[0];
+      const pmid = artigo.articleids.filter((id) => id.idtype === 'pubmed')[0];
+      const link = document.createElement('a');
+      link.href = `https://www.ncbi.nlm.nih.gov/pubmed/${pmid.value}`;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = artigo.title;
+      li.appendChild(link);
+      const info = document.createElement('span');
+      info.textContent = ` (${new Date(artigo.pubdate).toLocaleDateString()})`;
+      li.appendChild(info);
+      listaArtigos.appendChild(li);
+    });
+  } catch (e) {
+    console.error('Erro ao buscar artigos:', e);
+  }
 }
 
-console.log("Chamando a função buscarArtigos");
-buscarArtigos();
+// Chamar a função buscarArtigos ao carregar a página
+window.onload = buscarArtigos;
+
 
